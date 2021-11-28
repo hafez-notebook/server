@@ -3,9 +3,7 @@
 ##  Linux
 ```bash
     git clone https://github.com/SHMF1385/SmartNotebook-Server.git && cd SmartNotebook-Server
-    virtualenv venv && source venv/bin/activate
-    pip install -r requirements.txt
-    mv core/settings.py.sample core/settings.py
+    make
 ```
 Then edit core/settings.py
 
