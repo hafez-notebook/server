@@ -2,7 +2,7 @@
 
 ##  Linux
 ```bash
-    git clone https://github.com/SHMF1385/SmartNotebook-Server.git && cd SmartNotebook-Server
+    git clone https://github.com/hafez-notebook/server.git && cd SmartNotebook-Server
     make
 ```
 Then edit core/settings.py
