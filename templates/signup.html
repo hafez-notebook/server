@@ -13,27 +13,31 @@
             font-family: "Vazir";
             text-align: center;
         }
+        .mlr{
+            margin-left: 10%;
+            margin-right: 10%;
+        }
     </style>
     <body>
-        <div class="container" dir="rtl">
+        <div class="container mt-3" dir="rtl">
             <h1 class="mb-4">ایجاد حساب کاربری</h1>
             {% if messages %}
                 {% for message in messages %}
-                    <div class="alert alert-{{ alertType }}">
+                    <div class="alert alert-{{ alertType }} mlr">
                         {{ message}}
                     </div>
                 {% endfor %}
             {% endif %}
             <form method="POST" action="/users/signup/">{% csrf_token %}
-              <div class="form-floating mb-3">
+              <div class="form-floating mb-3 mlr">
                 <input class="form-control mb-4" name="email" placeholder="ایمیل" required>
                 <label>ایمیل</label>
               </div>
-              <div class="form-floating mb-3">
+              <div class="form-floating mb-3 mlr">
                 <input class="form-control mb-4" name="username" placeholder="نام کاربری" required>
                 <label>نام کاربری</label>
               </div>
-              <div class="form-floating mb-3">
+              <div class="form-floating mb-3 mlr">
                 <input class="form-control mb-4" name="password" placeholder="رمز عبور" type="password" required>
                 <label>رمز عبور</label>
               </div>
