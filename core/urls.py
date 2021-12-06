@@ -17,11 +17,15 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from .views import homePageView
+from users.views import signupView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('notes/', include('notes.urls')),
     path('users/', include('users.urls')),
+    path('', homePageView.as_view(), name="homePage"),
+    path('signup/', signupView.as_view(), name="signupView"),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
