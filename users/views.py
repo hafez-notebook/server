@@ -165,7 +165,7 @@ def send_verification_email(email, code, absolute_uri):
     message["From"] = settings.SENDER_EMAIL
     message["To"] = settings.SENDER_EMAIL_PASSWORD
 
-    text = "لینک تایید ثبت نام شما برای دفترچه یادداشت هوشمند"
+    text = "لینک تایید ثبت نام شما برای دفترچه یادداشت حافظ"
     html = f"""\
     <html>
     <body>
