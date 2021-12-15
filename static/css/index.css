@@ -1,0 +1,8 @@
+@font-face {
+    font-family: "Vazir";
+    src: url("{% static 'fonts/Vazir-Regular.woff2' %}");
+}
+
+.body {
+    font-family: "Vazir";
+}
