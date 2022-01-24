@@ -86,6 +86,7 @@ class newNoteView(View):
                     )
                     return JsonResponse({"Status": "FILE_CREATED"})
                 return JsonResponse({"Status": "ERR_TITLE_EXISTS"})
+            return JsonResponse({"Status": "AUTHENTICATION_FAILED"})
         return JsonResponse({"Status": "ERR_LOW_ARGS"})
 
 
