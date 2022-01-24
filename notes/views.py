@@ -36,6 +36,7 @@ class getNoteView(View):
                     context = {
                         'title': note[0].title,
                         'content': note[0].content,
+                        'type': note[0].type,
                         'pk': note[0].pk
                     }
                     return JsonResponse({"Status": "SUCCESSED", 'note': context})
@@ -74,17 +75,20 @@ class newNoteView(View):
         username = request.POST.get('username')
         token = request.POST.get('token')
         title = request.POST.get('title')
+        noteType = request.POST.get('noteType')
         content = request.POST.get('content')
-        if username and token and content:
+        if username and token and noteType and content:
             user = get_object_or_404(User, token__token=token)
             if user:
                 if not Note.objects.filter(title=title):
-                    Note.objects.create(
-                        title = title,
-                        user = user,
-                        content = content,
-                    )
-                    return JsonResponse({"Status": "FILE_CREATED"})
+                    if noteType in Note.allowed_types:
+                        Note.objects.create(
+                            title = title,
+                            user = user,
+                            content = content,
+                        )
+                        return JsonResponse({"Status": "FILE_CREATED"})
+                    return JsonResponse({"Status": "ERR_TYPE_IS_INCORRECT"})
                 return JsonResponse({"Status": "ERR_TITLE_EXISTS"})
             return JsonResponse({"Status": "AUTHENTICATION_FAILED"})
         return JsonResponse({"Status": "ERR_LOW_ARGS"})
