@@ -1,6 +1,5 @@
 venv
 **/settings.py
-**/migrations/
 **/__pycache__/
 **/my.cnf
 .idea
