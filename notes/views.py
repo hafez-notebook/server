@@ -35,6 +35,7 @@ class getNoteView(View):
                 if note:
                     context = {
                         'title': note[0].title,
+                        'datetime': note[0].datetime,
                         'content': note[0].content,
                         'type': note[0].type,
                         'pk': note[0].pk
@@ -60,7 +61,7 @@ class getNotesView(View):
                 notes = Note.objects.filter(user=user[0])[::-1]
                 context = {}
                 for note in notes:
-                    context[note.title] = {'content': note.content, 'pk': note.pk}
+                    context[note.title] = {'content': note.content, 'datetime': note.datetime, 'pk': note.pk}
                 return JsonResponse({"Status": "SUCCESSED", "notes": context})
             return JsonResponse({"Status": "AUTHENTICATION_FAILED"})
         return JsonResponse({"Status": "ERR_ARGS"})
