@@ -22,23 +22,25 @@ class getNoteView(View):
         if username and token:
             user = User.objects.filter(username=username, token__token=token)
             if user:
+                user = user[0]
                 if title:
                     note = Note.objects.filter(
-                        user = user[0],
+                        user = user,
                         title = title
                     )
                 elif pk:
                     note = Note.objects.filter(
-                        user = user[0],
+                        user = user,
                         pk = pk
                     )
                 if note:
+                    note = note[0]
                     context = {
-                        'title': note[0].title,
-                        'datetime': note[0].datetime,
-                        'content': note[0].content,
-                        'type': note[0].type,
-                        'pk': note[0].pk
+                        'title': note.title,
+                        'datetime': note.datetime,
+                        'content': note.content,
+                        'type': note.type,
+                        'pk': note.pk
                     }
                     return JsonResponse({"Status": "SUCCESSED", 'note': context})
                 return JsonResponse({"Status": "NOTE_IS_NOTE_DEFIND"})
