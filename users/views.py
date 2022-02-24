@@ -80,7 +80,7 @@ class signupView(View):
                     loop = False
                 continue
             Token.objects.create(user=user, token=token)
-            TempSignupCode.filter(username=temp_user.username).delete()
+            TempSignupCode.objects.filter(username=temp_user.username).delete()
             return render(request, 'userCreated.html')
         else:
             return render(request, 'signup.html')
