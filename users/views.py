@@ -146,6 +146,28 @@ class deleteUserView(View):
         return JsonResponse({"Status": "ERR_ARGS"})
 
 @method_decorator(csrf_exempt, name="dispatch")
+class getDevices(View):
+
+    def get(self, request):
+        return JsonResponse({"Status": "ERR_REQUEST_TYPE_IS_GET"})
+
+    def post(self, request):
+        username = request.POST.get('username')
+        token = request.POST.get('token')
+
+        if username and token:
+            user = User.objects.filter(username=username, token__token=token)
+            if user:
+                user = user[0]
+                devices = UserDevice.objects.filter(user=user)
+                context = {}
+                for device in devices:
+                    context[device.device_name] = {'ip': device.ip, 'first_login': device.first_login, 'last_login': device.last_login, 'online': device.online}
+                return JsonResponse({"Status": "SUCCESSED", "devices": context})
+            return JsonResponse({"Status": "AUTHENTICATION_FAILED"})
+        return JsonResponse({"Status": "ERR_ARGS"})
+
+@method_decorator(csrf_exempt, name="dispatch")
 class goOffline(View):
 
     def get(self, request):
