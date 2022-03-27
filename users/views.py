@@ -22,7 +22,7 @@ class loginView(View):
 
     def get(self, request):
         return JsonResponse({"Stauts": "ERR_REQUEST_TYPE_IS_GET"})
-    
+
     def post(self, request):
         email = request.POST.get("email")
         username = request.POST.get("username")
@@ -52,10 +52,12 @@ class loginView(View):
                     ip = ip,
                     last_login = now,
                     first_login = now,
+                    online = True
                     )
             else:
                 now = timezone.now()
                 deviceNameCheck[0].last_login = now
+                deviceNameCheck[0].online = True
                 deviceNameCheck[0].save()
             return JsonResponse({"Status": "SUCCESSED", "TOKEN": token.token})
         return JsonResponse({"Status": "AUTHENTICATION_FAILED"})
@@ -144,11 +146,39 @@ class deleteUserView(View):
         return JsonResponse({"Status": "ERR_ARGS"})
 
 @method_decorator(csrf_exempt, name="dispatch")
+class goOffline(View):
+
+    def get(self, request):
+        return JsonResponse({"Status": "ERR_REQUEST_TYPE_IS_GET"})
+
+    def post(self, request):
+        username = request.POST.get('username')
+        token = request.POST.get('token')
+        deviceName = request.POST.get('deviceName')
+        ip = request.POST.get('ip')
+
+        if username and token:
+            user = User.objects.filter(username=username, token__token=token)
+            if user:
+                user = user[0]
+                if deviceName:
+                    device = UserDevice.objects.filter(deviceName=deviceName)
+                elif ip:
+                    device = UserDevice.objects.filter(ip=ip)
+                if device:
+                    device.online = False
+                    device.save()
+                return JsonResponse({"Status": 'ERR_DEVICE_NOT_FOUND'})
+            return JsonResponse({"Status": "AUTHENTICATION_FAILED"})
+        return JsonResponse({"Status": "ERR_ARGS"})
+
+
+@method_decorator(csrf_exempt, name="dispatch")
 class checkTokenView(View):
 
     def get(self, request):
         return JsonResponse({"Status": "ERR_REQUEST_TYPE_IS_GET"})
-    
+
     def post(self, request):
         username = request.POST.get('username')
         token = request.POST.get('token')

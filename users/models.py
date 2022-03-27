@@ -20,6 +20,7 @@ class UserDevice(models.Model):
     ip = models.CharField(max_length=16)
     last_login = models.DateTimeField()
     first_login = models.DateTimeField()
+    online = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.user}-{self.device_name}"
